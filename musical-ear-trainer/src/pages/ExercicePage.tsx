@@ -1,5 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import  * as Tone from 'tone'
+import { saveSessionResult } from '../storage'
+import type { SessionResult } from '../types'
 
 type Interval = {
   name: string
@@ -74,6 +76,14 @@ export default function ExercicePage() {
 
     function handleNextQuestion() {
         if (currentQuestionIndex + 1 >= question.length) {
+            const sessionResult: SessionResult = {
+                id: crypto.randomUUID(),
+                date: new Date().toISOString(),
+                exerciceType: 'intervals',
+                score,
+                totalQuestions: QUESTION_PER_SESSION,
+            }
+            saveSessionResult(sessionResult)
             setSessionCompleted(true)
             return
         }

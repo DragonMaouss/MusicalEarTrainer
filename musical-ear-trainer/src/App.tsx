@@ -22,6 +22,12 @@ function App() {
           >
             Commencer un exercice
           </button>
+          <button 
+            className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded ml-4"
+            onClick={() => navigate('/stats')}
+          >
+            Voir les statistiques
+          </button>
         </section>
       </main>
     </div>

@@ -4,6 +4,7 @@ import { StrictMode } from 'react'
 import './index.css'
 import App from './App.tsx'
 import ExercicePage from './pages/ExercicePage.tsx'
+import StatsPage from './pages/StatsPage.tsx';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -11,6 +12,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/exercice" element={<ExercicePage />} />
+        <Route path="/stats" element={<StatsPage />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>,
