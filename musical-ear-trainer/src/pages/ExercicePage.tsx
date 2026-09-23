@@ -24,9 +24,11 @@ const INTERVALS: Interval[] = [
 
 function generateQuestion() {
   const correct = INTERVALS[Math.floor(Math.random() * INTERVALS.length)]
-  // Generate 3 random incorrect answers 
+  // Generate 3 random incorrect answers and shuffle them with the correct answer
   const others = INTERVALS.filter(interval => interval !== correct)
-  const choices = [correct, ...others.sort(() => 0.5 - Math.random()).slice(0, 3)]
+  const shuffledChoices = others.sort(() => 0.5 - Math.random())
+  const choices = [correct, ...shuffledChoices.slice(0, 3)].sort(() => 0.5 - Math.random())
+
   return {
     correct, choices,
   }
