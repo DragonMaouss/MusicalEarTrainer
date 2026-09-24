@@ -5,13 +5,15 @@ import './index.css'
 import App from './App.tsx'
 import ExercicePage from './pages/ExercicePage.tsx'
 import StatsPage from './pages/StatsPage.tsx';
+import ExercicesPage from './pages/ExercicesPage.tsx';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />} />
-        <Route path="/exercice" element={<ExercicePage />} />
+        <Route path="/exercices" element={<ExercicesPage />} />
+        <Route path="/exercices/intervalles" element={<ExercicePage />} />
         <Route path="/stats" element={<StatsPage />} />
       </Routes>
     </BrowserRouter>

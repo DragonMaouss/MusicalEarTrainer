@@ -18,7 +18,7 @@ function App() {
           <p className="text-gray-600">Développé ton oreille musicale avec des exercices interactifs.</p>
           <button 
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            onClick={() => navigate('/exercice')}
+            onClick={() => navigate('/exercices')}
           >
             Commencer un exercice
           </button>
