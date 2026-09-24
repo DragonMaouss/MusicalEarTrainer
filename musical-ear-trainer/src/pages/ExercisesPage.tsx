@@ -9,7 +9,7 @@ type ExerciseType = {
 
 const EXERCISES: ExerciseType[] = [
     {
-        id: "intervalles",
+        id: "intervals",
         name: "Intervalles",
         description: "Reconnaître la distance entre deux notes (seconde, tierce, quinte, etc.).",
         path: "/exercices/intervalles"

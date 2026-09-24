@@ -3,9 +3,9 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { StrictMode } from 'react'
 import './index.css'
 import App from './App.tsx'
-import ExercicePage from './pages/ExercicePage.tsx'
+import ExercicePage from './pages/IntervalExercisePage.tsx'
 import StatsPage from './pages/StatsPage.tsx';
-import ExercicesPage from './pages/ExercicesPage.tsx';
+import ExercicesPage from './pages/ExercisesPage.tsx';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <StrictMode>

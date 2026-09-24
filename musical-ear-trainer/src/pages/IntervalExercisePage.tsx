@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import  * as Tone from 'tone'
 import { saveSessionResult } from '../storage'
 import type { SessionResult } from '../types'
@@ -81,7 +81,7 @@ export default function ExercicePage() {
             const sessionResult: SessionResult = {
                 id: crypto.randomUUID(),
                 date: new Date().toISOString(),
-                exerciceType: 'intervals',
+                exerciseType: 'intervals',
                 score,
                 totalQuestions: QUESTION_PER_SESSION,
             }

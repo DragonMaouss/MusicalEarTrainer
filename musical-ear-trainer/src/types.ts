@@ -1,7 +1,7 @@
 export type SessionResult = {
     id : string
     date: string
-    exerciceType: 'intervals' 
+    exerciseType: 'intervals' 
     score: number
     totalQuestions: number
 }
