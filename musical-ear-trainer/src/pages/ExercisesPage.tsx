@@ -14,6 +14,12 @@ const EXERCISES: ExerciseType[] = [
         description: "Reconnaître la distance entre deux notes (seconde, tierce, quinte, etc.).",
         path: "/exercices/intervalles"
     },
+    {
+        id: "chords",
+        name: "Accords",
+        description: "Identifier les accords majeurs et mineurs.",
+        path: "/exercices/accords"
+    }
 ]
 
 export default function ExercicesPage() {
