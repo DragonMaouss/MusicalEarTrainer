@@ -1,5 +1,7 @@
 import { useState } from "react";
 import * as Tone from "tone";
+import type { SessionResult } from "../types";
+import { saveSessionResult } from "../storage";
 
 type ChordType = 'Majeur' | 'Mineur';
 
@@ -61,6 +63,14 @@ export default function ChordExercisePage() {
 
     function handleNextQuestion() {
         if (currentQuestionIndex + 1 >= questions.length) {
+            const sessionResult: SessionResult = {
+                id: crypto.randomUUID(),
+                date: new Date().toISOString(),
+                exerciseType: 'chords',
+                score,
+                totalQuestions: QUESTION_PER_SESSION,
+            }
+            saveSessionResult(sessionResult)
             setSessionFinished(true)
             return
         }
