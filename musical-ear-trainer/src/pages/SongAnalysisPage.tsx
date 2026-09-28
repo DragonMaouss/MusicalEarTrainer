@@ -1,6 +1,27 @@
 import { useState, useRef, useEffect} from "react";
 import * as Tone from "tone";
 
+const CHROMATIC_NOTES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+
+const  WHITE_NOTES = [
+    "C4", "D4", "E4", "F4", "G4", "A4", "B4", 
+    "C5", "D5", "E5", "F5", "G5", "A5", "B5"
+]
+
+const BLACK_KEYS = [
+  { note: 'C#4', afterWhiteKey: 0 },
+  { note: 'D#4', afterWhiteKey: 1 },
+  { note: 'F#4', afterWhiteKey: 3 },
+  { note: 'G#4', afterWhiteKey: 4 },
+  { note: 'A#4', afterWhiteKey: 5 },
+  { note: 'C#5', afterWhiteKey: 7 },
+  { note: 'D#5', afterWhiteKey: 8 },
+  { note: 'F#5', afterWhiteKey: 10 },
+  { note: 'G#5', afterWhiteKey: 11 },
+  { note: 'A#5', afterWhiteKey: 12 },
+]
+
+type Mode = "Majeur" | "Mineur";
 
 function getYoutubeVideoID(input: string): string | null {
     try {
@@ -24,6 +45,8 @@ function getYoutubeVideoID(input: string): string | null {
 export default function SongAnalysisPage() {
     const [youtubeURL, setYoutubeURL] = useState("");
     const [videoID, setVideoID] = useState<string | null>(null);
+    const [selectedNote, setSelectedNote] = useState<string | null>(null);
+    const [selectedMode, setSelectedMode] = useState<Mode | null>(null);
     
     const synthRef = useRef<Tone.Synth | null>(null);
 
@@ -88,6 +111,104 @@ export default function SongAnalysisPage() {
                             ></iframe>
                         </section>
                     )}
+
+                    <section className="rounded-lg border bg-white p-5">
+                        <h2 className="text-lg font-semibold mb-4">
+                            Piano Virtuel
+                        </h2>
+
+                        <p className="mb-4">
+                            Cliquez sur les touches pour jouer des notes.
+                        </p>
+
+                        <div className="mt-5 overflow-x-auto pb-2">
+                            <div className="relative h-48 w-[840px] select-none">
+                                <div className="flex h-full">
+                                    {WHITE_NOTES.map((note) => (
+                                    <button
+                                        key={note}
+                                        type="button"
+                                        aria-label={`Jouer la note ${note}`}
+                                        onClick={() => playNote(note)}
+                                        className="h-full w-[60px] shrink-0 rounded-b-md border border-gray-400 bg-white pb-3 text-sm text-gray-700 hover:bg-blue-50 active:bg-blue-100"
+                                    >
+                                    <span className="flex h-full items-end justify-center">
+                                            {note}
+                                    </span>
+                                    </button>
+                                ))}
+                                </div>
+
+                                {BLACK_KEYS.map(({ note, afterWhiteKey }) => (
+                                    <button
+                                        key={note}
+                                        type="button"
+                                        aria-label={`Jouer la note ${note}`}
+                                        onClick={() => playNote(note)}
+                                        style={{ left: (afterWhiteKey + 1) * 60 - 20 }}
+                                        className="absolute top-0 z-10 flex h-28 w-10 items-end justify-center rounded-b-md border border-gray-950 bg-gray-900 pb-2 text-xs text-white shadow-md hover:bg-gray-700 active:bg-blue-700"
+                                    >
+                                        {note}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+
+                    <section className="rounded-lg border bg-white p-5">
+                        <div>
+                            <h2 className="font-semibold">Note fondamentale</h2>
+
+                            <div className="mt-2 flex flex-wrap gap-2">
+                                {CHROMATIC_NOTES.map((note) => (
+                                    <button
+                                        key={note}
+                                        type="button"
+                                        onClick={() => setSelectedNote(note)}
+                                        className={`rounded-md border px-4 py-2 text-sm font-medium ${
+                                            selectedNote === note ? "bg-blue-600 text-white" : "bg-white text-gray-700 hover:bg-gray-50"
+                                        }`}
+                                    >
+                                        {note}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div>
+                            <h2 className="font-semibold">Mode</h2>
+
+                            <div className="mt-3 grid grid-cols-2 gap-2">
+                                {(["Majeur", "Mineur"] as const).map((mode) => (
+                                    <button
+                                        key={mode}
+                                        type="button"
+                                        aria-pressed={selectedMode === mode}
+                                        onClick={() => {
+                                            setSelectedMode(mode)
+                                        }}
+                                        className={`rounded-md border px-3 py-2 ${
+                                            selectedMode === mode 
+                                                ? "border-blue-700 bg-blue-600 text-white"
+                                                : "bg-white hover:bg-gray-100"
+                                        }`}
+                                    >
+                                        {mode}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="md:col-span-2">
+                            <button 
+                                type="button"
+                                /** TODO : check if it is correct */
+                                className="w-full rounded-md bg-blue-600 px-4 py-3 text-white hover:bg-blue-700"
+                            >
+                                Soumettre ma réponse
+                            </button>
+                        </div>
+                    </section>
 
                 </section>
             </main>
