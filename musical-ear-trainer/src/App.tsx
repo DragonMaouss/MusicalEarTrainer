@@ -28,6 +28,12 @@ function App() {
           >
             Voir les statistiques
           </button>
+          <button 
+            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-4"
+            onClick={() => navigate('/exercices/analyse-de-chansons')}
+          >
+            Analyser une chanson
+          </button>
         </section>
       </main>
     </div>

@@ -7,6 +7,7 @@ import IntervalExercisePage from './pages/IntervalExercisePage.tsx'
 import StatsPage from './pages/StatsPage.tsx';
 import ExercisesPage from './pages/ExercisesPage.tsx';
 import ChordExercisePage from './pages/ChordExercisePage.tsx';
+import SongAnalysisPage from './pages/SongAnalysisPage.tsx';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -16,6 +17,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Route path="/exercices" element={<ExercisesPage />} />
         <Route path="/exercices/intervalles" element={<IntervalExercisePage />} />
         <Route path="/exercices/accords" element={<ChordExercisePage />} />
+        <Route path="/exercices/analyse-de-chansons" element={<SongAnalysisPage />} />
         <Route path="/stats" element={<StatsPage />} />
       </Routes>
     </BrowserRouter>
