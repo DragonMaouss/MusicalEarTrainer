@@ -2,6 +2,13 @@
 
 Application web d'entraînement de l'oreille musicale
 
+### Démonstration
+
+La démonstration présente le parcours principal de l'application : exercices auditifs, lecture audio, sessions, statistiques et analyse d'une chanson Youtube.
+
+[Voir la démonstration](docs/demo/musical-ear-trainer-demo.mp4)
+
+
 ## 1. Objectif du projet
 
 Aider l'utilisateur à développer son oreille musicale à travers des exercices interactifs.
@@ -60,7 +67,6 @@ La première version se concentre sur un parcours simple :
 - accepter un lien Youtube ;
 - afficher la vidéo ;
 - analyser la tonalité ;
-- conserver les analyses dans l'historique.
 
 
 ## 3. Architecture prévue 
@@ -85,3 +91,14 @@ Stockage local
 - Tailwind CSS ;
 - Tone.js. 
 
+## Lancement local
+
+```bash
+npm install
+npm run dev
+```
+
+Dans un second terminal :
+```bash
+npm run dev:server
+``` 
