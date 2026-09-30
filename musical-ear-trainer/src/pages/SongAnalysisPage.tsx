@@ -60,7 +60,8 @@ export default function SongAnalysisPage() {
     const [analysis, setAnalysis] = useState<AnalysisResult | null>(null)
     const [isAnalyzing, setIsAnalyzing] = useState(false)
     const [analysisError, setAnalysisError] = useState('')
-        
+    const [answerResult, setAnswerResult] = useState<"correct" | "incorrect" | null>(null)    
+
     const synthRef = useRef<Tone.Synth | null>(null);
 
     useEffect(() => {
@@ -122,6 +123,18 @@ export default function SongAnalysisPage() {
         void analyzeVideo(youtubeURL)
     }
 
+    function handleSubmitAnswer(){
+        if (!analysis || !selectedMode || !selectedNote || answerResult) return
+
+        const expectedMode = analysis.scale === 'major' ? "Majeur" : "Mineur"
+
+        const isCorrect = 
+            selectedNote === analysis.key &&
+            selectedMode === expectedMode
+
+        setAnswerResult(isCorrect ? "correct" : "incorrect")
+    }
+
     return (
         <div className="min-h-screen bg-gray-50 text-gray-900">
             <header className="bg-blue-600 text-white p-4">
@@ -181,20 +194,11 @@ export default function SongAnalysisPage() {
                                     </p>
                                 )}
 
-                                {analysis && (
-                                    <div className="mt-3">
-                                    <p className="text-xl font-semibold">
-                                        {analysis.key} {analysis.scale === 'major' ? 'majeur' : 'mineur'}
-                                    </p>
 
-                                    <p className="mt-1 text-sm text-gray-600">
-                                        Confiance estimée : {Math.round(analysis.confidence * 100)} %
+                                {analysis && !answerResult && (
+                                    <p role="status" className="mt-3 text-gray-600">
+                                        Analyse terminée. Ecoute la chanson et soumets ta réponse.
                                     </p>
-
-                                    <p className="mt-2 text-sm text-gray-600">
-                                        Cette tonalité est une estimation calculée sur un extrait audio.
-                                    </p>
-                                    </div>
                                 )}
                             </section>
                         </section>
@@ -290,11 +294,32 @@ export default function SongAnalysisPage() {
                         <div className="md:col-span-2">
                             <button 
                                 type="button"
-                                /** TODO : check if it is correct */
+                                disabled={
+                                    !analysis || 
+                                    !selectedMode || 
+                                    !selectedNote || 
+                                    answerResult !== null
+                                }
+                                onClick={handleSubmitAnswer}
                                 className="w-full rounded-md bg-blue-600 px-4 py-3 text-white hover:bg-blue-700"
                             >
                                 Soumettre ma réponse
                             </button>
+
+                            {answerResult && (
+                                <p
+                                role="status"
+                                className={`mt-3 rounded-md p-3 ${
+                                answerResult === 'correct'
+                                    ? 'bg-green-50 text-green-800'
+                                    : 'bg-red-50 text-red-800'
+                                    }`}
+                                >
+                                    {answerResult === 'correct'
+                                    ? 'Bonne réponse !'
+                                    : 'Mauvaise réponse.'}
+                                </p>
+                            )}
                         </div>
                     </section>
 
