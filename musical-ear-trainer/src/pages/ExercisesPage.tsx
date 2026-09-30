@@ -29,7 +29,7 @@ export default function ExercicesPage() {
         <div className="min-h-screen bg-gray-50 text-gray-900">
             <main className="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
                 <h1 className="text-3xl font-bold mb-6">Exercices</h1>
-                <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-2">
                     {EXERCISES.map((exercise) => (
                         <div key={exercise.id} className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
                             <h2 className="text-xl font-semibold mb-2">{exercise.name}</h2>

@@ -2,6 +2,7 @@ import { useState } from "react";
 import * as Tone from "tone";
 import type { SessionResult } from "../types";
 import { saveSessionResult } from "../storage";
+import { Link } from "react-router-dom";
 
 type ChordType = 'Majeur' | 'Mineur';
 
@@ -93,7 +94,7 @@ export default function ChordExercisePage() {
             <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center">
                 <header className="border-b border-gray-300 w-full py-4 mb-8">
                     <div className="container mx-auto text-center">
-                        <h1 className="text-3xl font-bold">Exercice d'intervalles</h1>
+                        <h1 className="text-3xl font-bold">Exercice d'accords</h1>
                     </div>
                 </header>
 
@@ -120,9 +121,15 @@ export default function ChordExercisePage() {
     }
 
     return (
-        <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center">
-            <header className="border-b border-gray-300 w-full py-4 mb-8">
-                <div className="container mx-auto text-center">
+        <div className="min-h-screen bg-gray-50 text-gray-900">
+            <header className="bg-blue-600 text-white p-4">
+                <div className="mx-auto max-w-6xl px-5 py-6">
+                    <Link
+                    to="/"
+                    className="text-sm text-white/60 hover:text-white"
+                    >
+                        ← Retour à l'accueil
+                    </Link>
                     <h1 className="text-3xl font-bold">Exercice d'accords - Question {currentQuestionIndex + 1} / {QUESTION_PER_SESSION}</h1>
                 </div>
             </header>

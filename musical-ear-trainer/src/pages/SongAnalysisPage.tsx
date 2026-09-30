@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect} from "react";
 import * as Tone from "tone";
+import { Link } from "react-router-dom";
 
 const CHROMATIC_NOTES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
 
@@ -138,14 +139,20 @@ export default function SongAnalysisPage() {
     return (
         <div className="min-h-screen bg-gray-50 text-gray-900">
             <header className="bg-blue-600 text-white p-4">
-                <div className="container mx-auto">
+                <div className="mx-auto max-w-6xl px-5 py-6">
+                    <Link
+                    to="/"
+                    className="text-sm text-white/60 hover:text-white"
+                    >
+                        ← Retour à l'accueil
+                    </Link>
                     <h1 className="text-2xl font-bold mt-2">Analyse de Chanson</h1>
                     <p className="mt-1">Ecoute la chanson, essaie des notes au piano et propose une tonalité.</p>
                 </div>
             </header>
             
             <main className="mx-auto max-w-5xl space-y-8 px-4 py-8">
-                <section className="rounded-lg border bg-white p-5">
+                <section className="rounded-lg border bg-white p-5 space-y-4">
                     <form onSubmit={handleSubmit} className="flex flex-col gap-3 sm:flex-row">
                         <label htmlFor="youtubeURL" className="sr-only">URL YouTube:</label>
                         <input
@@ -166,7 +173,7 @@ export default function SongAnalysisPage() {
                     </form>
 
                     {videoID && (
-                        <section className="rounded-lg border bg-white p-5">
+                        <section className="rounded-lg border bg-white p-5 space-y-4">
                             <h2 className="text-lg font-semibold mb-4">Vidéo YouTube</h2>
 
                             <iframe
@@ -247,7 +254,7 @@ export default function SongAnalysisPage() {
                         </div>
                     </section>
 
-                    <section className="rounded-lg border bg-white p-5">
+                    <section className="rounded-lg border bg-white p-5 space-y-4">
                         <div>
                             <h2 className="font-semibold">Note fondamentale</h2>
 

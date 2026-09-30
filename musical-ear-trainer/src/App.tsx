@@ -13,7 +13,7 @@ function App() {
       </header>
 
       <main className="container mx-auto px-4">
-        <section className="bg-white p-8 rounded shadow-md text-center">
+        <section className="bg-white p-8 rounded shadow-md text-center space-y-4">
           <h2 className="text-2xl font-semibold mb-4">Bienvenue</h2>
           <p className="text-gray-600">Développé ton oreille musicale avec des exercices interactifs.</p>
           <button 
