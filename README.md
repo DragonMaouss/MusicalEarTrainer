@@ -6,8 +6,7 @@ Application web d'entraînement de l'oreille musicale
 
 La démonstration présente le parcours principal de l'application : exercices auditifs, lecture audio, sessions, statistiques et analyse d'une chanson Youtube.
 
-[Voir la démonstration]((https://github.com/user-attachments/assets/b99e9fc7-dfb2-4b6c-bbea-c163af4b0b29
-)
+[Voir la démonstration](https://github.com/user-attachments/assets/b99e9fc7-dfb2-4b6c-bbea-c163af4b0b29)
 
 
 ## 1. Objectif du projet
