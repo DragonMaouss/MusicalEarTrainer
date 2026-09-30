@@ -34,6 +34,11 @@ type AnalysisResult = {
   fullName: string
 }
 
+type SubmittedAnswer = {
+  note: string
+  mode: 'Majeur' | 'Mineur'
+}
+
 function getYoutubeVideoID(input: string): string | null {
     try {
         const url = new URL(input);
@@ -63,7 +68,7 @@ export default function SongAnalysisPage() {
     const [analysisError, setAnalysisError] = useState('')
     const [answerResult, setAnswerResult] = useState<"correct" | "incorrect" | null>(null)    
     const [showAnswer, setShowAnswer] = useState(false)
-
+    const [submittedAnswer, setSubmittedAnswer] = useState<SubmittedAnswer | null>(null)
     const synthRef = useRef<Tone.Synth | null>(null);
 
     useEffect(() => {
@@ -128,14 +133,19 @@ export default function SongAnalysisPage() {
     function handleSubmitAnswer(){
         if (!analysis || !selectedMode || !selectedNote || answerResult) return
 
-        const expectedMode = analysis.scale === 'major' ? "Majeur" : "Mineur"
-
-        const isCorrect = 
-            selectedNote === analysis.key &&
-            selectedMode === expectedMode
-
-        setAnswerResult(isCorrect ? "correct" : "incorrect")
+        setSubmittedAnswer({
+            note: selectedNote,
+            mode: selectedMode,
+        })
     }
+
+    const isCorrect =
+        submittedAnswer !== null &&
+        analysis !== null &&
+        submittedAnswer.note === analysis.key &&
+        submittedAnswer.mode === (
+        analysis.scale === 'major' ? 'Majeur' : 'Mineur'
+    )
 
     return (
         <div className="min-h-screen bg-gray-50 text-gray-900">
@@ -314,7 +324,8 @@ export default function SongAnalysisPage() {
                         </div>
 
                         <div className="md:col-span-2">
-                            <button 
+                            { analysis &&
+                                <button 
                                 type="button"
                                 disabled={
                                     !analysis || 
@@ -327,19 +338,18 @@ export default function SongAnalysisPage() {
                             >
                                 Soumettre ma réponse
                             </button>
+                            }
+                            
+                            
 
-                            {answerResult && (
+                            {submittedAnswer && analysis && (
                                 <p
-                                role="status"
-                                className={`mt-3 rounded-md p-3 ${
-                                answerResult === 'correct'
-                                    ? 'bg-green-50 text-green-800'
-                                    : 'bg-red-50 text-red-800'
+                                    role="status"
+                                    className={`mt-3 font-medium ${
+                                    isCorrect ? 'text-green-700' : 'text-red-700'
                                     }`}
                                 >
-                                    {answerResult === 'correct'
-                                    ? 'Bonne réponse !'
-                                    : 'Mauvaise réponse.'}
+                                    {isCorrect ? 'Bonne réponse !' : 'Mauvaise réponse, réessaie.'}
                                 </p>
                             )}
                         </div>
