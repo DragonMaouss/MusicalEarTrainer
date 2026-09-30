@@ -23,6 +23,16 @@ const BLACK_KEYS = [
 
 type Mode = "Majeur" | "Mineur";
 
+type AnalysisResult = {
+  videoId: string
+  title: string
+  thumbnail: string
+  key: string
+  scale: 'major' | 'minor'
+  confidence: number
+  fullName: string
+}
+
 function getYoutubeVideoID(input: string): string | null {
     try {
         const url = new URL(input);
@@ -47,7 +57,10 @@ export default function SongAnalysisPage() {
     const [videoID, setVideoID] = useState<string | null>(null);
     const [selectedNote, setSelectedNote] = useState<string | null>(null);
     const [selectedMode, setSelectedMode] = useState<Mode | null>(null);
-    
+    const [analysis, setAnalysis] = useState<AnalysisResult | null>(null)
+    const [isAnalyzing, setIsAnalyzing] = useState(false)
+    const [analysisError, setAnalysisError] = useState('')
+        
     const synthRef = useRef<Tone.Synth | null>(null);
 
     useEffect(() => {
@@ -62,10 +75,51 @@ export default function SongAnalysisPage() {
         synthRef.current?.triggerAttackRelease(note, "8n");
     }
 
+    async function analyzeVideo(url: string) {
+        setIsAnalyzing(true)
+        setAnalysis(null)
+        setAnalysisError('')
+
+        try {
+            const response = await fetch('/api/analysis/youtube-key', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ url }),
+            })
+
+            const data = await response.json()
+
+            if (!response.ok) {
+            throw new Error(data.message ?? 'L’analyse a échoué.')
+            }
+
+            setAnalysis(data)
+        } catch (error) {
+            setAnalysisError(
+            error instanceof Error
+                ? error.message
+                : 'Impossible d’analyser la vidéo.',
+            )
+        } finally {
+            setIsAnalyzing(false)
+        }
+    }
+
     function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
-        event.preventDefault();
-        const id = getYoutubeVideoID(youtubeURL);
-        setVideoID(id);
+        event.preventDefault()
+
+        const id = getYoutubeVideoID(youtubeURL)
+
+        if (!id) {
+            setVideoID(null)
+            return
+        }
+
+        setVideoID(id)
+        setAnalysis(null)
+        void analyzeVideo(youtubeURL)
     }
 
     return (
@@ -109,6 +163,40 @@ export default function SongAnalysisPage() {
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowFullScreen
                             ></iframe>
+
+                            <section className="mt-6 rounded-md border bg-gray-50 p-4">
+                                <h2 className="text-lg font-semibold">
+                                    Analyse de la tonalité
+                                </h2>
+
+                                {isAnalyzing && (
+                                    <p className="mt-2 text-gray-600">
+                                    Analyse de la chanson en cours…
+                                    </p>
+                                )}
+
+                                {analysisError && (
+                                    <p role="alert" className="mt-2 text-red-700">
+                                    {analysisError}
+                                    </p>
+                                )}
+
+                                {analysis && (
+                                    <div className="mt-3">
+                                    <p className="text-xl font-semibold">
+                                        {analysis.key} {analysis.scale === 'major' ? 'majeur' : 'mineur'}
+                                    </p>
+
+                                    <p className="mt-1 text-sm text-gray-600">
+                                        Confiance estimée : {Math.round(analysis.confidence * 100)} %
+                                    </p>
+
+                                    <p className="mt-2 text-sm text-gray-600">
+                                        Cette tonalité est une estimation calculée sur un extrait audio.
+                                    </p>
+                                    </div>
+                                )}
+                            </section>
                         </section>
                     )}
 
