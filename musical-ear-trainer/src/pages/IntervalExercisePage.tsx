@@ -169,16 +169,19 @@ export default function ExercicePage() {
                         {currentQuestion.choices.map( choice => {
                             const isSelected = selected === choice.name
 
-                            let baseClass =  "rounded-md border px-4 py-2 text-left hover:bg-gray-50"
-                            
+                            let baseClass =
+                            'rounded-md border px-4 py-2 text-left transition-colors'
+
                             if (validated) {
                                 if (choice.name === currentQuestion.correct.name) {
-                                    baseClass = "rounded-md border border-green-600 bg-green-50 px-4 py-2 text-left"
-                                } else if (isSelected) {
-                                    baseClass = "rounded-md border border-red-600 bg-red-50 px-4 py-2 text-left"
+                                    baseClass += ' rounded-md border border-green-600 bg-green-50 px-4 py-2 text-left'
+                                }
+                            } else if (validated && isSelected) {
+                                baseClass += ' border-red-600 bg-red-100 text-red-900'
                             } else if (isSelected) {
-                                    baseClass = "rounded-md border border-blue-600 bg-blue-50 px-4 py-2 text-left"
-                                }    
+                                baseClass += ' border-blue-600 bg-blue-600 text-white'
+                            } else {
+                                baseClass += ' border-gray-300 bg-white hover:bg-blue-50'
                             }
                             return (
                                 <button
