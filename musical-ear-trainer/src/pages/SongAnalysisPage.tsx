@@ -62,6 +62,7 @@ export default function SongAnalysisPage() {
     const [isAnalyzing, setIsAnalyzing] = useState(false)
     const [analysisError, setAnalysisError] = useState('')
     const [answerResult, setAnswerResult] = useState<"correct" | "incorrect" | null>(null)    
+    const [showAnswer, setShowAnswer] = useState(false)
 
     const synthRef = useRef<Tone.Synth | null>(null);
 
@@ -185,10 +186,24 @@ export default function SongAnalysisPage() {
                             ></iframe>
 
                             <section className="mt-6 rounded-md border bg-gray-50 p-4">
-                                <h2 className="text-lg font-semibold">
-                                    Analyse de la tonalité
-                                </h2>
+                                <div className="flex flex-wrap items-center gap-4">
+                                    <button
+                                        type="button"
+                                        disabled={!analysis || isAnalyzing}
+                                        onClick={() => setShowAnswer(true)}
+                                        className="rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+                                    >
+                                        Montrer la réponse
+                                    </button>
 
+                                    {showAnswer && analysis && (
+                                        <p role="status" className="text-lg font-semibold">
+                                        Tonalité estimée : {analysis.key}{' '}
+                                        {analysis.scale === 'major' ? 'majeur' : 'mineur'}
+                                        </p>
+                                    )}
+                                </div>
+                                
                                 {isAnalyzing && (
                                     <p className="mt-2 text-gray-600">
                                     Analyse de la chanson en cours…
